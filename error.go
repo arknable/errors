@@ -5,8 +5,21 @@ package errors
 type Error interface {
 	error
 
-	Scene() ErrorScene      // Location of the error
-	Message() string        // Message of the error
-	Wrappers() []ErrorScene // Functions that propagate the error
-	HasWrappers() bool      // Convenient way to check whether the error wrapped
+	// Returns location of the error
+	Scene() ErrorScene
+
+	// Returns code of the error
+	Code() uint16
+
+	// Sets error code
+	WithCode(uint16) Error
+
+	// Returns message of the error
+	Message() string
+
+	// Returns functions that propagate the error
+	Wrappers() []ErrorScene
+
+	// Returns true if the error wrapped
+	HasWrappers() bool
 }

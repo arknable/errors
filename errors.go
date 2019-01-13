@@ -1,7 +1,7 @@
 package errors
 
 // New creates new Error
-func New(msg string) error {
+func New(msg string) Error {
 	err := new(theError)
 	err.wrappers = []ErrorScene{}
 	err.message = msg
