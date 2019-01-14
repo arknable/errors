@@ -1,6 +1,7 @@
 package test
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
 	"testing"
@@ -29,6 +30,15 @@ func TestFromError(t *testing.T) {
 	assert.Equal(t, err.Message(), castedErr.Message())
 }
 
+func TestEmpty(t *testing.T) {
+	err := errs.Empty()
+	castedErr, ok := err.(errs.Error)
+	assert.True(t, ok)
+	assert.NotNil(t, castedErr)
+	assert.Equal(t, err.Message(), castedErr.Message())
+	assert.Equal(t, "", err.Message())
+}
+
 func TestErrorMessage(t *testing.T) {
 	msgErr := "an error occured"
 	err := errs.New(msgErr)
@@ -47,12 +57,13 @@ func TestErrorCode(t *testing.T) {
 
 func TestMarshalError(t *testing.T) {
 	msg := "an error occured"
-	expectedErr := errs.New(msg)
+	expectedErr := errs.New(msg).WithCode(3)
 	data, err := json.Marshal(expectedErr)
 	if err != nil {
 		t.Fatal(err)
 	}
-	resultErr := errs.New("")
+	t.Log(bytes.NewBuffer(data))
+	resultErr := errs.Empty()
 	if err := json.Unmarshal(data, resultErr); err != nil {
 		t.Fatal(err)
 	}
