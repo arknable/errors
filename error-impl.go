@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+// Implements Error
 type theError struct {
 	code     uint16
 	scene    ErrorScene
@@ -52,7 +53,7 @@ func (e *theError) WithCode(code uint16) Error {
 	return e
 }
 
-// MarshalJSON serializes error to JSON
+// MarshalJSON implements json.Marshaler
 func (e *theError) MarshalJSON() ([]byte, error) {
 	err := new(jsError)
 	err.Code = e.Code()
@@ -60,6 +61,7 @@ func (e *theError) MarshalJSON() ([]byte, error) {
 	return json.Marshal(err)
 }
 
+// UnmarshalJSON implements json.Unmarshaler
 func (e *theError) UnmarshalJSON(data []byte) error {
 	jerr := new(jsError)
 	if err := json.Unmarshal(data, jerr); err != nil {
