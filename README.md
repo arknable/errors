@@ -93,7 +93,7 @@ the marshaled informations are code and message,
 {"code":3,"message":"an error occured"}
 ```
 
-Other informations ignored because error marshaling mostly used for http response so callers infomation only worth using for logging and debugging.
+Other informations ignored because error marshaling mostly used for http response so callers infomation only worth using for logging and debugging .... I think :D.
 
 ## License
 
