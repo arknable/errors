@@ -12,11 +12,11 @@ To create a new error, use `New()` as follows,
 ```go
 // parsing.go
 func parseSomething() error {
-    // .......... other thing happen here
+    // .......... other things happen here
     if err := doSomething(); err != nil {
         return errors.New("Missing parameter: foo")
     }    
-    // .......... other thing happen here
+    // .......... other things happen here
     return nil
 }
 ```
@@ -25,12 +25,12 @@ or use `FromError()` to use standard error,
 ```go
 // parsing.go
 func parseSomething() error {
-    // .......... other thing happen here
+    // .......... other things happen here
     if err := doSomething(); err != nil {
         // Lets say returned message is "Missing parameter: foo"
         return errors.FromError(err) 
     }    
-    // .......... other thing happen here
+    // .......... other things happen here
     return nil
 }
 ```
@@ -40,22 +40,22 @@ then if `parseSomething` called within other function, we propagate the error us
 ```go
 // something.go
 function getSomething() error {
-    // .......... other thing happen here
+    // .......... other things happen here
     if err := parseSomething(); err != nil {
         return errors.Wrap(err)
     }
-    // .......... other thing happen here
+    // .......... other things happen here
 }
 ```
 
 ```go
 fewthings.go
 function getFewThings() error {
-    // .......... other thing happen here
+    // .......... other things happen here
     if err := getSomething(); err != nil {
         return errors.Wrap(err)
     }
-    // .......... other thing happen here
+    // .......... other things happen here
 }
 ```
 
