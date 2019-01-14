@@ -10,6 +10,11 @@ func New(msg string) Error {
 	return err
 }
 
+// FromError creates new Error from standard error
+func FromError(err error) Error {
+	return New(err.Error())
+}
+
 // Wrap wraps given error
 func Wrap(err error) error {
 	e, ok := err.(Error)
