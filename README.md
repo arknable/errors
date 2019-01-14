@@ -7,8 +7,7 @@ Wraps error with function informations where it occured or propagated.
 `go get -u github.com/arknable/errors`
 
 ## How To Use
-
-To create a new error, use `New()` as follows,
+Full documentation is on [GoDoc](https://godoc.org/github.com/arknable/errors). To create a new error, use `New()` as follows,
 ```go
 // parsing.go
 func parseSomething() error {
