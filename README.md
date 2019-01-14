@@ -88,7 +88,7 @@ if err := json.Unmarshal(data, e); err != nil {
 }
 ```
 
-the marshalled informations are code and message,
+the marshaled informations are code and message,
 ```json
 {"code":3,"message":"an error occured"}
 ```
