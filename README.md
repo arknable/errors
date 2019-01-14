@@ -71,18 +71,19 @@ at /path/to/folder/fewthings.go:77 (getFewThings)
 
 Encoding or decoding can be done via standard fashion.
 
-To marshal error,
+To marshal:
 ```go
-data, err := json.Marshal(expectedErr)
+e := errors.New("an error occured").WithCode(3)
+data, err := json.Marshal(e)
 if err != nil {
     return errors.FromError(err)
 }
 ```
 
-and to unmarshal,
+and to unmarshal:
 ```
-resultErr := errs.Empty()
-if err := json.Unmarshal(data, resultErr); err != nil {
+e := errs.Empty()
+if err := json.Unmarshal(data, e); err != nil {
     return errors.FromError(err)
 }
 ```
