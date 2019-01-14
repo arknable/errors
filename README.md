@@ -69,7 +69,7 @@ at /path/to/folder/fewthings.go:77 (getFewThings)
 
 ### JSON
 
-Error can me marshalled on unmarshalled to JSON via standard fashion.
+Encoding or decoding can be done via standard fashion.
 
 To marshal error,
 ```go
