@@ -67,6 +67,33 @@ at /path/to/folder/something.go:18 (getSomething)
 at /path/to/folder/fewthings.go:77 (getFewThings)
 ```
 
+### JSON
+
+Error can me marshalled on unmarshalled to JSON via standard fashion.
+
+To marshal error,
+```go
+data, err := json.Marshal(expectedErr)
+if err != nil {
+    return errors.FromError(err)
+}
+```
+
+and to unmarshal,
+```
+resultErr := errs.Empty()
+if err := json.Unmarshal(data, resultErr); err != nil {
+    return errors.FromError(err)
+}
+```
+
+the marshalled informations are code and message,
+```json
+{"code":3,"message":"an error occured"}
+```
+
+Other informations ignored because error marshaling mostly used for http response so callers infomation only worth using for logging and debugging.
+
 ## License
 
 This project is licensed under the BSD 2 License - see the [LICENSE](LICENSE) file for details.
