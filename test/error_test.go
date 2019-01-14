@@ -13,6 +13,7 @@ func TestNewError(t *testing.T) {
 	e, ok := err.(errors.Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
+	t.Log(err)
 }
 
 func TestErrorMessage(t *testing.T) {
