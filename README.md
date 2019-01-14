@@ -82,7 +82,7 @@ if err != nil {
 
 and to unmarshal:
 ```
-e := errs.Empty()
+e := errors.Empty()
 if err := json.Unmarshal(data, e); err != nil {
     return errors.FromError(err)
 }
