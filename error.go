@@ -1,9 +1,13 @@
 package errors
 
+import "encoding/json"
+
 // Error is a trouble :p.
 // It keeps callers, if asked via Wrap().
 type Error interface {
 	error
+	json.Marshaler
+	json.Unmarshaler
 
 	// Returns location of the error
 	Scene() ErrorScene

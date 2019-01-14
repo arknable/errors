@@ -3,6 +3,7 @@ package errors
 // New creates new Error
 func New(msg string) Error {
 	err := new(theError)
+	err.code = ErrUnknown
 	err.wrappers = []ErrorScene{}
 	err.message = msg
 	err.scene = getScene()
@@ -16,6 +17,7 @@ func Wrap(err error) error {
 		return err
 	}
 	werr := new(theError)
+	werr.code = e.Code()
 	werr.scene = e.Scene()
 	werr.message = e.Message()
 	werr.wrappers = append(werr.wrappers, getScene())

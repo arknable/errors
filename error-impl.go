@@ -2,6 +2,7 @@ package errors
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 )
 
@@ -42,13 +43,31 @@ func (e *theError) Wrappers() []ErrorScene {
 
 // HasWrappers implements Error.HasWrappers
 func (e *theError) HasWrappers() bool {
-	return len(e.wrappers) > 0
+	return (e.wrappers != nil) && (len(e.wrappers) > 0)
 }
 
 // WithCode implements Error.WithCode
 func (e *theError) WithCode(code uint16) Error {
 	e.code = code
 	return e
+}
+
+// MarshalJSON serializes error to JSON
+func (e *theError) MarshalJSON() ([]byte, error) {
+	err := new(jsError)
+	err.Code = e.Code()
+	err.Message = e.Message()
+	return json.Marshal(err)
+}
+
+func (e *theError) UnmarshalJSON(data []byte) error {
+	jerr := new(jsError)
+	if err := json.Unmarshal(data, jerr); err != nil {
+		return err
+	}
+	e.code = jerr.Code
+	e.message = jerr.Message
+	return nil
 }
 
 // Error implements error
