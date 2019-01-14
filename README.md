@@ -8,8 +8,8 @@ Wraps error with function informations where it occured or propagated.
 
 ## How To Use
 
-To create a new error use `New()` function as follows,
-```
+To create a new error, use `New()` as follows,
+```go
 // parsing.go
 func parseSomething() error {
     // .......... other thing happen here
@@ -23,7 +23,7 @@ func parseSomething() error {
 
 then if `parseSomething` called within other function, we propagate the error using `Wrap()`:
 
-```
+```go
 // something.go
 function getSomething() error {
     // .......... other thing happen here
@@ -34,7 +34,7 @@ function getSomething() error {
 }
 ```
 
-```
+```go
 fewthings.go
 function getFewThings() error {
     // .......... other thing happen here
@@ -46,7 +46,7 @@ function getFewThings() error {
 ```
 
 the result will be something like this,
-```
+```bash
 Missing parameter: foo
 at /path/to/folder/parsing.go:6 (parseSomething)
 at /path/to/folder/something.go:18 (getSomething)
