@@ -15,6 +15,7 @@ func TestNewError(t *testing.T) {
 	e, ok := err.(errs.Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
+	assert.Equal(t, e.Message(), errorMessage)
 	t.Log(err)
 }
 

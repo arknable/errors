@@ -2,8 +2,10 @@ package test
 
 import "github.com/arknable/gerror"
 
+const errorMessage = "something is broken"
+
 func errorFunc() error {
-	return gerror.New("something is broken")
+	return gerror.New(errorMessage)
 }
 
 func firstWrapFunc() error {
