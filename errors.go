@@ -1,4 +1,4 @@
-package errors
+package gerror
 
 // New creates new Error
 func New(msg string) Error {

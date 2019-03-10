@@ -1,4 +1,4 @@
-package errors
+package gerror
 
 // JSON structure for error serialization
 type jsError struct {

@@ -6,7 +6,7 @@ import (
 	"errors"
 	"testing"
 
-	errs "github.com/arknable/errors"
+	errs "github.com/arknable/gerror"
 	"github.com/stretchr/testify/assert"
 )
 

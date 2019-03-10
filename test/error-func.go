@@ -1,9 +1,9 @@
 package test
 
-import "github.com/arknable/errors"
+import "github.com/arknable/gerror"
 
 func errorFunc() error {
-	return errors.New("something is broken")
+	return gerror.New("something is broken")
 }
 
 func firstWrapFunc() error {
@@ -11,9 +11,9 @@ func firstWrapFunc() error {
 }
 
 func secondWrapFunc() error {
-	return errors.Wrap(firstWrapFunc())
+	return gerror.Wrap(firstWrapFunc())
 }
 
 func thirdWrapFunc() error {
-	return errors.Wrap(secondWrapFunc())
+	return gerror.Wrap(secondWrapFunc())
 }
