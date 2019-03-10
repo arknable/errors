@@ -1,4 +1,4 @@
-# arknable/errors
+# arknable/gerror
 
 Wraps error with function informations where it occured or propagated.
 
