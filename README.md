@@ -2,39 +2,34 @@
 
 Wraps error with function informations where it occured or propagated.
 
-## Install
-
-`go get -u github.com/arknable/errors`
-
 ## How To Use
-Full documentation is on [GoDoc](https://godoc.org/github.com/arknable/errors). To create a new error, use `New()` as follows,
+Full documentation is on [GoDoc](https://godoc.org/github.com/arknable/errors). Use `Wrap` to wrap an `error` object or either `WrapString` or `WrapStringf` to create a new `error`.
 ```go
 // parsing.go
 func parseSomething() error {
     // .......... other things happen here
     if err := doSomething(); err != nil {
-        return errors.New("Missing parameter: foo")
+        return errors.WrapString("Missing parameter: foo")
     }    
     // .......... other things happen here
     return nil
 }
 ```
 
-or use `FromError()` to use standard error,
+or for `error` object,
 ```go
 // parsing.go
 func parseSomething() error {
     // .......... other things happen here
     if err := doSomething(); err != nil {
-        // Lets say returned message is "Missing parameter: foo"
-        return errors.FromError(err) 
+        return errors.Wrap(err) 
     }    
     // .......... other things happen here
     return nil
 }
 ```
 
-then if `parseSomething` called within other function, we propagate the error using `Wrap()`:
+assume `parseSomething` called from other function:
 
 ```go
 // something.go
@@ -48,7 +43,7 @@ function getSomething() error {
 ```
 
 ```go
-fewthings.go
+// fewthings.go
 function getFewThings() error {
     // .......... other things happen here
     if err := getSomething(); err != nil {
@@ -75,7 +70,7 @@ To marshal:
 e := errors.New("an error occured").WithCode(3)
 data, err := json.Marshal(e)
 if err != nil {
-    return errors.FromError(err)
+    return errors.Wrap(err)
 }
 ```
 
@@ -83,7 +78,7 @@ and to unmarshal:
 ```
 e := errors.Empty()
 if err := json.Unmarshal(data, e); err != nil {
-    return errors.FromError(err)
+    return errors.Wrap(err)
 }
 ```
 
@@ -91,8 +86,6 @@ the marshaled informations are code and message,
 ```json
 {"code":3,"message":"an error occured"}
 ```
-
-Other informations ignored because error marshaling mostly used for http response so callers infomation only worth using for logging and debugging .... I think :D.
 
 ## License
 
