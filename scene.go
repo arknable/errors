@@ -1,4 +1,4 @@
-package gerror
+package errors
 
 // ErrorScene is where an error occured
 type ErrorScene interface {

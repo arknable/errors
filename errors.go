@@ -1,4 +1,4 @@
-package gerror
+package errors
 
 import (
 	"errors"
