@@ -1,35 +1,39 @@
 package gerror
 
-// New creates new Error
-func New(msg string) Error {
-	err := new(theError)
-	err.code = ErrUnknown
-	err.wrappers = []ErrorScene{}
-	err.message = msg
-	err.scene = getScene()
-	return err
-}
-
-// FromError creates new Error from standard error
-func FromError(err error) Error {
-	return New(err.Error())
-}
-
-// Empty creates error with no message
-func Empty() Error {
-	return New("")
-}
+import (
+	"errors"
+	"fmt"
+)
 
 // Wrap wraps given error
-func Wrap(err error) error {
+func Wrap(err error) Error {
+	werr := new(theError)
 	e, ok := err.(Error)
 	if !ok {
-		return err
+		werr.code = ErrUnknown
+		werr.wrappers = []ErrorScene{}
+		werr.message = err.Error()
+		werr.scene = getScene()
+	} else {
+		werr.code = e.Code()
+		werr.scene = e.Scene()
+		werr.message = e.Message()
+		werr.wrappers = append(werr.wrappers, getScene())
 	}
-	werr := new(theError)
-	werr.code = e.Code()
-	werr.scene = e.Scene()
-	werr.message = e.Message()
-	werr.wrappers = append(werr.wrappers, getScene())
 	return werr
+}
+
+// WrapString wraps given error message
+func WrapString(msg string) Error {
+	return Wrap(errors.New(msg))
+}
+
+// WrapStringf wraps given formatted error message
+func WrapStringf(msg string, args ...interface{}) Error {
+	return Wrap(fmt.Errorf(msg, args...))
+}
+
+// Empty creates error with empty message
+func Empty() Error {
+	return new(theError)
 }

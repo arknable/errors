@@ -5,11 +5,11 @@ import "github.com/arknable/gerror"
 const errorMessage = "something is broken"
 
 func errorFunc() error {
-	return gerror.New(errorMessage)
+	return gerror.WrapString(errorMessage)
 }
 
 func firstWrapFunc() error {
-	return errorFunc()
+	return gerror.Wrap(errorFunc())
 }
 
 func secondWrapFunc() error {
