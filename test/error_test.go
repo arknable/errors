@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/arknable/gerror"
+	"github.com/arknable/errors"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestWrapError(t *testing.T) {
 	err := thirdWrapFunc()
-	e, ok := err.(gerror.Error)
+	e, ok := err.(errors.Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
 	assert.Equal(t, e.Message(), errorMessage)
@@ -21,35 +21,35 @@ func TestWrapError(t *testing.T) {
 
 func TestWrapString(t *testing.T) {
 	msg := "standard error"
-	err := gerror.WrapString(msg)
+	err := errors.WrapString(msg)
 	assert.NotNil(t, err)
 	assert.Equal(t, msg, err.Message())
 }
 
 func TestWrapFormattedString(t *testing.T) {
 	msg := "standard error from %s"
-	err := gerror.WrapStringf(msg, "Google")
+	err := errors.WrapStringf(msg, "Google")
 	assert.NotNil(t, err)
 	assert.Equal(t, fmt.Sprintf(msg, "Google"), err.Message())
 }
 
 func TestErrorCode(t *testing.T) {
 	code := uint16(97)
-	err := gerror.WrapString("an error occured")
-	assert.Equal(t, gerror.ErrUnknown, err.Code())
+	err := errors.WrapString("an error occured")
+	assert.Equal(t, errors.ErrUnknown, err.Code())
 	err.WithCode(code)
 	assert.Equal(t, code, err.Code())
 }
 
 func TestMarshalError(t *testing.T) {
 	msg := "an error occured"
-	expectedErr := gerror.WrapString(msg).WithCode(3)
+	expectedErr := errors.WrapString(msg).WithCode(3)
 	data, err := json.Marshal(expectedErr)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Log(bytes.NewBuffer(data))
-	resultErr := gerror.Empty()
+	resultErr := errors.Empty()
 	if err := json.Unmarshal(data, resultErr); err != nil {
 		t.Fatal(err)
 	}
