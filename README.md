@@ -53,7 +53,7 @@ function getFewThings() error {
 }
 ```
 
-the result will be something like this,
+the result will be something like this:
 ```bash
 Missing parameter: foo
 at /path/to/folder/parsing.go:6 (parseSomething)
@@ -67,7 +67,7 @@ Encoding or decoding can be done via standard fashion.
 
 To marshal:
 ```go
-e := errors.New("an error occured").WithCode(3)
+e := errors.WrapString("an error occured").WithCode(3)
 data, err := json.Marshal(e)
 if err != nil {
     return errors.Wrap(err)
