@@ -116,3 +116,8 @@ func (e theError) Error() string {
 	}
 	return str.String()
 }
+
+// Equal implements Error.Equal
+func (e theError) Equal(err error) bool {
+	return e.message == err.Error()
+}

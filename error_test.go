@@ -30,16 +30,17 @@ package errors
 
 import (
 	"encoding/json"
+	goerr "errors"
 	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-const tErrorMessage = "something is broken"
+var tErrorMessage = goerr.New("something is broken")
 
 func tErrorFunc() error {
-	return WrapString(tErrorMessage)
+	return WrapString(tErrorMessage.Error())
 }
 
 func tFirstWrapFunc() error {
@@ -59,7 +60,8 @@ func TestWrapError(t *testing.T) {
 	e, ok := err.(Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
-	assert.Equal(t, e.Message(), tErrorMessage)
+	assert.Equal(t, e.Message(), tErrorMessage.Error())
+	assert.True(t, e.Equal(tErrorMessage))
 }
 
 func TestWrapString(t *testing.T) {

@@ -54,4 +54,7 @@ type Error interface {
 
 	// Returns true if the error wrapped
 	HasWrappers() bool
+
+	// Equal checks if given error equal original error
+	Equal(error) bool
 }
