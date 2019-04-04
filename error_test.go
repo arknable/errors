@@ -36,30 +36,30 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-const testErrorMessage = "something is broken"
+const tErrorMessage = "something is broken"
 
-func errorFunc() error {
-	return WrapString(testErrorMessage)
+func tErrorFunc() error {
+	return WrapString(tErrorMessage)
 }
 
-func firstWrapFunc() error {
-	return Wrap(errorFunc())
+func tFirstWrapFunc() error {
+	return Wrap(tErrorFunc())
 }
 
-func secondWrapFunc() error {
-	return Wrap(firstWrapFunc())
+func tSecondWrapFunc() error {
+	return Wrap(tFirstWrapFunc())
 }
 
-func thirdWrapFunc() error {
-	return Wrap(secondWrapFunc())
+func tThirdWrapFunc() error {
+	return Wrap(tSecondWrapFunc())
 }
 
 func TestWrapError(t *testing.T) {
-	err := thirdWrapFunc()
+	err := tThirdWrapFunc()
 	e, ok := err.(Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
-	assert.Equal(t, e.Message(), testErrorMessage)
+	assert.Equal(t, e.Message(), tErrorMessage)
 }
 
 func TestWrapString(t *testing.T) {
