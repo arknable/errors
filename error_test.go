@@ -1,4 +1,4 @@
-package test
+package errors
 
 /*
 	BSD 2-Clause License
@@ -29,55 +29,69 @@ package test
 */
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
 	"testing"
 
-	"github.com/arknable/errors"
 	"github.com/stretchr/testify/assert"
 )
 
+const testErrorMessage = "something is broken"
+
+func errorFunc() error {
+	return WrapString(testErrorMessage)
+}
+
+func firstWrapFunc() error {
+	return Wrap(errorFunc())
+}
+
+func secondWrapFunc() error {
+	return Wrap(firstWrapFunc())
+}
+
+func thirdWrapFunc() error {
+	return Wrap(secondWrapFunc())
+}
+
 func TestWrapError(t *testing.T) {
 	err := thirdWrapFunc()
-	e, ok := err.(errors.Error)
+	e, ok := err.(Error)
 	assert.True(t, ok)
 	assert.NotNil(t, e)
-	assert.Equal(t, e.Message(), errorMessage)
-	t.Log(err)
+	assert.Equal(t, e.Message(), testErrorMessage)
 }
 
 func TestWrapString(t *testing.T) {
 	msg := "standard error"
-	err := errors.WrapString(msg)
+	err := WrapString(msg)
 	assert.NotNil(t, err)
 	assert.Equal(t, msg, err.Message())
 }
 
 func TestWrapFormattedString(t *testing.T) {
 	msg := "standard error from %s"
-	err := errors.WrapStringf(msg, "Google")
+	err := WrapStringf(msg, "Google")
 	assert.NotNil(t, err)
 	assert.Equal(t, fmt.Sprintf(msg, "Google"), err.Message())
 }
 
 func TestErrorCode(t *testing.T) {
 	code := uint16(97)
-	err := errors.WrapString("an error occured")
-	assert.Equal(t, errors.ErrUnknown, err.Code())
+	err := WrapString("an error occured")
+	assert.Equal(t, ErrUnknown, err.Code())
 	err.WithCode(code)
 	assert.Equal(t, code, err.Code())
 }
 
 func TestMarshalError(t *testing.T) {
 	msg := "an error occured"
-	expectedErr := errors.WrapString(msg).WithCode(3)
+	expectedErr := WrapString(msg).WithCode(3)
 	data, err := json.Marshal(expectedErr)
 	if err != nil {
 		t.Fatal(err)
 	}
-	t.Log(bytes.NewBuffer(data))
-	resultErr := errors.Empty()
+	resultErr := Empty()
 	if err := json.Unmarshal(data, resultErr); err != nil {
 		t.Fatal(err)
 	}
