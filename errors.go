@@ -65,3 +65,10 @@ func WrapStringf(msg string, args ...interface{}) Error {
 func Empty() Error {
 	return new(theError)
 }
+
+// New creates new error with given message
+func New(message string) Error {
+	err := new(theError)
+	err.message = message
+	return err
+}
