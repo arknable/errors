@@ -29,7 +29,6 @@ package errors
 */
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -53,12 +52,12 @@ func Wrap(err error) Error {
 
 // WrapString wraps given error message
 func WrapString(msg string) Error {
-	return Wrap(errors.New(msg))
+	return Wrap(New(msg))
 }
 
 // WrapStringf wraps given formatted error message
 func WrapStringf(msg string, args ...interface{}) Error {
-	return Wrap(fmt.Errorf(msg, args...))
+	return WrapString(fmt.Sprintf(msg, args...))
 }
 
 // Empty creates error with empty message
@@ -69,6 +68,7 @@ func Empty() Error {
 // New creates new error with given message
 func New(message string) Error {
 	err := new(theError)
+	err.code = ErrUnknown
 	err.message = message
 	return err
 }
