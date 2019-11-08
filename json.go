@@ -30,6 +30,6 @@ package errors
 
 // JSON structure for error serialization
 type jsError struct {
-	Code    uint16 `json:"code"`
+	Code    int    `json:"code"`
 	Message string `json:"message"`
 }

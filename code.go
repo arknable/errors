@@ -28,9 +28,7 @@ package errors
 	OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-import "math"
-
 const (
 	// ErrUnknown defines an unknown error
-	ErrUnknown = uint16(math.MaxUint16)
+	ErrUnknown = -1
 )

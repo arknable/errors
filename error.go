@@ -41,10 +41,10 @@ type Error interface {
 	Scene() ErrorScene
 
 	// Returns code of the error
-	Code() uint16
+	Code() int
 
 	// Sets error code
-	WithCode(uint16) Error
+	WithCode(int) Error
 
 	// Returns message of the error
 	Message() string

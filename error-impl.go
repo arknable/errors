@@ -36,14 +36,14 @@ import (
 
 // Implements Error
 type theError struct {
-	code     uint16
+	code     int
 	scene    ErrorScene
 	message  string
 	wrappers []ErrorScene
 }
 
 // Code implements Error.Code
-func (e *theError) Code() uint16 {
+func (e *theError) Code() int {
 	return e.code
 }
 
@@ -76,7 +76,7 @@ func (e *theError) HasWrappers() bool {
 }
 
 // WithCode implements Error.WithCode
-func (e *theError) WithCode(code uint16) Error {
+func (e *theError) WithCode(code int) Error {
 	e.code = code
 	return e
 }
