@@ -79,7 +79,7 @@ func TestWrapFormattedString(t *testing.T) {
 }
 
 func TestErrorCode(t *testing.T) {
-	code := uint16(97)
+	code := 97
 	err := WrapString("an error occured")
 	assert.Equal(t, ErrUnknown, err.Code())
 	err.WithCode(code)
