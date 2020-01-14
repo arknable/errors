@@ -4,6 +4,9 @@ import (
 	"fmt"
 )
 
+// ErrUnknown defines an unknown error
+const ErrUnknown = -1
+
 // Wrap wraps given error
 func Wrap(err error) Error {
 	werr := new(theError)
