@@ -7,7 +7,7 @@ import (
 )
 
 // Implements Error
-type theError struct {
+type implError struct {
 	code     int
 	scene    ErrorScene
 	message  string
@@ -15,22 +15,22 @@ type theError struct {
 }
 
 // Code implements Error.Code
-func (e *theError) Code() int {
+func (e *implError) Code() int {
 	return e.code
 }
 
 // Scene implements Error.Scene
-func (e *theError) Scene() ErrorScene {
+func (e *implError) Scene() ErrorScene {
 	return e.scene
 }
 
 // Message implements Error.Message
-func (e *theError) Message() string {
+func (e *implError) Message() string {
 	return e.message
 }
 
 // Wrappers implements Error.Wrappers
-func (e *theError) Wrappers() []ErrorScene {
+func (e *implError) Wrappers() []ErrorScene {
 	length := len(e.wrappers)
 	if length != 0 {
 		return nil
@@ -43,18 +43,18 @@ func (e *theError) Wrappers() []ErrorScene {
 }
 
 // HasWrappers implements Error.HasWrappers
-func (e *theError) HasWrappers() bool {
+func (e *implError) HasWrappers() bool {
 	return (e.wrappers != nil) && (len(e.wrappers) > 0)
 }
 
 // WithCode implements Error.WithCode
-func (e *theError) WithCode(code int) Error {
+func (e *implError) WithCode(code int) Error {
 	e.code = code
 	return e
 }
 
 // MarshalJSON implements json.Marshaler
-func (e *theError) MarshalJSON() ([]byte, error) {
+func (e *implError) MarshalJSON() ([]byte, error) {
 	err := new(jsError)
 	err.Code = e.Code()
 	err.Message = e.Message()
@@ -62,7 +62,7 @@ func (e *theError) MarshalJSON() ([]byte, error) {
 }
 
 // UnmarshalJSON implements json.Unmarshaler
-func (e *theError) UnmarshalJSON(data []byte) error {
+func (e *implError) UnmarshalJSON(data []byte) error {
 	jerr := new(jsError)
 	if err := json.Unmarshal(data, jerr); err != nil {
 		return err
@@ -73,7 +73,7 @@ func (e *theError) UnmarshalJSON(data []byte) error {
 }
 
 // Error implements error
-func (e theError) Error() string {
+func (e implError) Error() string {
 	if e.scene == nil {
 		return e.message
 	}
@@ -90,6 +90,6 @@ func (e theError) Error() string {
 }
 
 // Equal implements Error.Equal
-func (e theError) Equal(err error) bool {
+func (e implError) Equal(err error) bool {
 	return e.message == err.Error()
 }

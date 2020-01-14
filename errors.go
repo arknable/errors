@@ -9,7 +9,7 @@ const ErrUnknown = -1
 
 // Wrap wraps given error
 func Wrap(err error) Error {
-	werr := new(theError)
+	werr := new(implError)
 	e, ok := err.(Error)
 	if !ok {
 		werr.code = ErrUnknown
@@ -37,12 +37,12 @@ func WrapStringf(msg string, args ...interface{}) Error {
 
 // Empty creates error with empty message
 func Empty() Error {
-	return new(theError)
+	return new(implError)
 }
 
 // New creates new error with given message
 func New(message string) Error {
-	err := new(theError)
+	err := new(implError)
 	err.code = ErrUnknown
 	err.message = message
 	return err
