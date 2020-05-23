@@ -47,3 +47,8 @@ func New(message string) Error {
 	err.message = message
 	return err
 }
+
+// Newf creates new error with given formatted message
+func Newf(format string, v ...interface{}) Error {
+	return New(fmt.Sprintf(format, v...))
+}

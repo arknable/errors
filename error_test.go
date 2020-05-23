@@ -72,3 +72,12 @@ func TestMarshalError(t *testing.T) {
 	assert.Equal(t, expectedErr.Code(), resultErr.Code())
 	assert.Equal(t, expectedErr.Message(), resultErr.Message())
 }
+
+func TestNew(t *testing.T) {
+	msg := "this is an error"
+	err := New(msg)
+	assert.Equal(t, msg, err.Message())
+	
+	err = Newf("this is an %s", "error message")
+	assert.Equal(t, "this is an error message", err.Message())
+}
