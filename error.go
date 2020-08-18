@@ -12,6 +12,9 @@ type Error interface {
 	// Returns location of the error
 	Scene() ErrorScene
 
+	// Set error scene
+	setScene(es ErrorScene)
+
 	// Returns code of the error
 	Code() int
 
@@ -23,6 +26,9 @@ type Error interface {
 
 	// Returns functions that propagate the error
 	Wrappers() []ErrorScene
+
+	// Appends a wrapper
+	appendWrapper(w ErrorScene)
 
 	// Returns true if the error wrapped
 	HasWrappers() bool

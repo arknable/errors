@@ -9,20 +9,22 @@ const ErrUnknown = -1
 
 // Wrap wraps given error
 func Wrap(err error) Error {
-	werr := new(implError)
 	e, ok := err.(Error)
 	if !ok {
-		werr.code = ErrUnknown
-		werr.wrappers = []ErrorScene{}
-		werr.message = err.Error()
-		werr.scene = getScene()
-	} else {
-		werr.code = e.Code()
-		werr.scene = e.Scene()
-		werr.message = e.Message()
-		werr.wrappers = append(werr.wrappers, getScene())
+		ie := new(implError)
+		ie.code = ErrUnknown
+		ie.wrappers = []ErrorScene{}
+		ie.message = err.Error()
+		ie.scene = getScene()
+		return ie
 	}
-	return werr
+
+	if e.Scene() == nil {
+		e.setScene(getScene())
+	} else {
+		e.appendWrapper(getScene())
+	}
+	return e
 }
 
 // WrapString wraps given error message

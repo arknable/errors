@@ -93,3 +93,11 @@ func (e implError) Error() string {
 func (e implError) Equal(err error) bool {
 	return e.message == err.Error()
 }
+
+func (e *implError) appendWrapper(w ErrorScene) {
+	e.wrappers = append(e.wrappers, w)
+}
+
+func (e *implError) setScene(es ErrorScene) {
+	e.scene = es
+}

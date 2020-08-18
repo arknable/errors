@@ -16,15 +16,18 @@ func tErrorFunc() error {
 }
 
 func tFirstWrapFunc() error {
-	return Wrap(tErrorFunc())
+	err := tErrorFunc()
+	return Wrap(err)
 }
 
 func tSecondWrapFunc() error {
-	return Wrap(tFirstWrapFunc())
+	err := tFirstWrapFunc()
+	return Wrap(err)
 }
 
 func tThirdWrapFunc() error {
-	return Wrap(tSecondWrapFunc())
+	err := tSecondWrapFunc()
+	return Wrap(err)
 }
 
 func TestWrapError(t *testing.T) {
