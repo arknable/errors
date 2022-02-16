@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var tErrorMessage = goerr.New("something is broken")
@@ -80,7 +81,13 @@ func TestNew(t *testing.T) {
 	msg := "this is an error"
 	err := New(msg)
 	assert.Equal(t, msg, err.Message())
-	
+
 	err = Newf("this is an %s", "error message")
 	assert.Equal(t, "this is an error message", err.Message())
+}
+
+func TestIs(t *testing.T) {
+	err := tThirdWrapFunc()
+	require.True(t, Is(err, tErrorMessage))
+	require.False(t, Is(err, goerr.New("other error")))
 }

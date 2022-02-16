@@ -54,3 +54,12 @@ func New(message string) Error {
 func Newf(format string, v ...interface{}) Error {
 	return New(fmt.Sprintf(format, v...))
 }
+
+// Is returns true if 'wrapped' is originally 'orig'.
+func Is(wrapped, orig error) bool {
+	e, ok := wrapped.(Error)
+	if !ok {
+		return false
+	}
+	return e.Equal(orig)
+}
