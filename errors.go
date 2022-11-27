@@ -1,6 +1,7 @@
 package errors
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -12,6 +13,7 @@ func Wrap(err error) Error {
 	e, ok := err.(Error)
 	if !ok {
 		ie := new(implError)
+		ie.origin = err
 		ie.code = ErrUnknown
 		ie.wrappers = []ErrorScene{}
 		ie.message = err.Error()
@@ -47,6 +49,7 @@ func New(message string) Error {
 	err := new(implError)
 	err.code = ErrUnknown
 	err.message = message
+	err.origin = errors.New(message)
 	return err
 }
 
@@ -62,4 +65,13 @@ func Is(wrapped, orig error) bool {
 		return false
 	}
 	return e.Equal(orig)
+}
+
+// Origin returns original error, if wrapped. Otherwise just return err itself.
+func Origin(err error) error {
+	wrapped, ok := err.(Error)
+	if ok {
+		return wrapped.Origin()
+	}
+	return err
 }

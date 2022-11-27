@@ -27,6 +27,9 @@ type Error interface {
 	// Returns functions that propagate the error
 	Wrappers() []ErrorScene
 
+	// Origin returns original error
+	Origin() error
+
 	// Appends a wrapper
 	appendWrapper(w ErrorScene)
 

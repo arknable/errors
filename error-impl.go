@@ -11,6 +11,7 @@ type implError struct {
 	code     int
 	scene    ErrorScene
 	message  string
+	origin   error
 	wrappers []ErrorScene
 }
 
@@ -92,6 +93,11 @@ func (e implError) Error() string {
 // Equal implements Error.Equal
 func (e implError) Equal(err error) bool {
 	return e.message == err.Error()
+}
+
+// Origin implements Error.Origin
+func (e implError) Origin() error {
+	return e.origin
 }
 
 func (e *implError) appendWrapper(w ErrorScene) {
