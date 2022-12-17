@@ -40,6 +40,11 @@ func TestWrapError(t *testing.T) {
 	assert.True(t, e.Equal(tErrorMessage))
 }
 
+func TestWrapNil(t *testing.T) {
+	e := Wrap(nil)
+	require.Nil(t, e)
+}
+
 func TestWrapString(t *testing.T) {
 	msg := "standard error"
 	err := WrapString(msg)

@@ -10,6 +10,10 @@ const ErrUnknown = -1
 
 // Wrap wraps given error
 func Wrap(err error) Error {
+	if err == nil {
+		return nil
+	}
+
 	e, ok := err.(Error)
 	if !ok {
 		ie := new(implError)
@@ -31,6 +35,7 @@ func Wrap(err error) Error {
 
 // WrapString wraps given error message
 func WrapString(msg string) Error {
+	err := New(msg)
 	return Wrap(New(msg))
 }
 
