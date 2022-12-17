@@ -35,7 +35,6 @@ func Wrap(err error) Error {
 
 // WrapString wraps given error message
 func WrapString(msg string) Error {
-	err := New(msg)
 	return Wrap(New(msg))
 }
 
