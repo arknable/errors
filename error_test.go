@@ -94,6 +94,11 @@ func TestNew(t *testing.T) {
 func TestIs(t *testing.T) {
 	err := tThirdWrapFunc()
 	require.True(t, Is(err, tErrorMessage))
+	require.True(t, Is(err, err))
+	require.True(t, goerr.Is(err, tErrorMessage))
+	require.True(t, goerr.Is(err, err))
+	require.ErrorIs(t, err, tErrorMessage)
+	require.ErrorIs(t, err, err)
 	require.False(t, Is(err, goerr.New("other error")))
 }
 
