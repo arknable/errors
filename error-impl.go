@@ -74,7 +74,7 @@ func (e *implError) UnmarshalJSON(data []byte) error {
 }
 
 // Error implements error
-func (e implError) Error() string {
+func (e *implError) Error() string {
 	if e.scene == nil {
 		return e.message
 	}
@@ -91,13 +91,22 @@ func (e implError) Error() string {
 }
 
 // Equal implements Error.Equal
-func (e implError) Equal(err error) bool {
+func (e *implError) Equal(err error) bool {
 	return e.message == err.Error()
 }
 
 // Origin implements Error.Origin
-func (e implError) Origin() error {
+func (e *implError) Origin() error {
 	return e.origin
+}
+
+// Is implements Error.Us
+func (e *implError) Is(err error) bool {
+	we, ok := err.(Error)
+	if ok {
+		return e.Equal(we.Origin())
+	}
+	return e.Equal(err)
 }
 
 func (e *implError) appendWrapper(w ErrorScene) {

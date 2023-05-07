@@ -38,4 +38,7 @@ type Error interface {
 
 	// Equal checks if given error equal original error
 	Equal(error) bool
+
+	// Is implements errors.Is
+	Is(err error) bool
 }
