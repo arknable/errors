@@ -69,9 +69,11 @@ func Is(wrapped, orig error) bool {
 
 // Origin returns original error, if wrapped. Otherwise just return err itself.
 func Origin(err error) error {
-	wrapped, ok := err.(Error)
-	if ok {
-		return wrapped.Origin()
+	if err != nil {
+		wrapped, ok := err.(Error)
+		if ok {
+			return wrapped.Origin()
+		}
 	}
 	return err
 }
